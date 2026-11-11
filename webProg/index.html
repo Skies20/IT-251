@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Developer Portfolio</title>
+    <style>
+        :root {
+            --leaf: #1f4a33;
+            --leaf-soft: #e4eee6;
+            --gold: #d9971f;
+            --gold-deep: #9a6508;
+            --paper: #f8faf6;
+            --card: #ffffff;
+            --ink: #17261d;
+            --muted: #55655a;
+            --line: #d3ddd5;
+            --head: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+            --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --leaf: #8fc9a1;
+                --leaf-soft: #1d3326;
+                --gold: #f0b440;
+                --gold-deep: #f0b440;
+                --paper: #0f1a14;
+                --card: #16251c;
+                --ink: #e9f1ea;
+                --muted: #9db0a2;
+                --line: #2a4033;
+            }
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--body);
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+        a { color: inherit; }
+        :focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+        .topbar {
+            position: sticky; top: 0; z-index: 10;
+            background: color-mix(in srgb, var(--paper) 88%, transparent);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+        .topbar nav {
+            max-width: 62rem; margin: 0 auto; padding: .75rem 1.25rem;
+            display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; align-items: center;
+        }
+        .topbar .brand { font-family: var(--head); font-weight: 800; margin-right: auto; text-decoration: none; }
+        .topbar a.link {
+            text-decoration: none; color: var(--muted); font-weight: 500; font-size: .95rem;
+            padding: .25rem 0; border-bottom: 2px solid transparent;
+        }
+        .topbar a.link:hover { color: var(--ink); border-color: var(--gold); }
+
+        .wrap { max-width: 62rem; margin: 0 auto; padding: 0 1.25rem; }
+
+        #home { padding: 4.5rem 0 3.5rem; }
+        .hero { display: grid; grid-template-columns: 1fr auto; gap: 2.5rem; align-items: center; }
+        .hero .hi { color: var(--gold-deep); font-weight: 600; margin: 0 0 .5rem; }
+        .hero h1 {
+            font-family: var(--head); font-weight: 800;
+            font-size: clamp(2.4rem, 6.5vw, 4.5rem);
+            line-height: 1.02; letter-spacing: -.03em; margin: 0 0 1.25rem;
+        }
+        .hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 34rem; margin: 0 0 1.75rem; }
+        .btn {
+            display: inline-block; font: 600 1rem var(--body); text-decoration: none; cursor: pointer;
+            padding: .8rem 1.4rem; border-radius: .6rem; border: 2px solid var(--leaf);
+            transition: background .15s, color .15s;
+        }
+        .btn.primary { background: var(--leaf); color: var(--paper); }
+        .btn.primary:hover { background: var(--gold); border-color: var(--gold); color: #17261d; }
+        .btn.ghost { margin-left: .5rem; color: var(--leaf); }
+        .btn.ghost:hover { background: var(--leaf-soft); }
+        .avatar {
+            width: 220px; height: 220px; object-fit: cover; border-radius: 50%;
+            background: var(--leaf-soft); border: 6px solid var(--gold);
+            box-shadow: 14px 14px 0 var(--leaf-soft);
+        }
+
+        section.block { padding: 3.25rem 0; border-top: 1px solid var(--line); }
+        h2 {
+            font-family: var(--head); font-weight: 700; font-size: 2rem;
+            letter-spacing: -.02em; margin: 0 0 1.5rem;
+        }
+        h2::after { content: ""; display: block; width: 3rem; height: 4px; background: var(--gold); margin-top: .6rem; border-radius: 2px; }
+        h3 { font-family: var(--head); font-size: 1.3rem; margin: 0 0 .5rem; line-height: 1.25; }
+        .about-text { max-width: 36rem; font-size: 1.2rem; }
+
+        .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .75rem; }
+        .chips li {
+            background: var(--leaf-soft); color: var(--leaf); font-weight: 600;
+            padding: .5rem 1.1rem; border-radius: 2rem; border: 1px solid var(--line);
+        }
+
+        table { width: 100%; max-width: 40rem; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: .75rem; overflow: hidden; }
+        th, td { text-align: left; padding: .85rem 1.1rem; border-bottom: 1px solid var(--line); }
+        thead th, tr:first-child th { background: var(--leaf); color: var(--paper); font-family: var(--head); }
+        tr:last-child td { border-bottom: 0; }
+        td:first-child { font-weight: 600; color: var(--muted); width: 11rem; }
+
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.5rem; }
+        article {
+            background: var(--card); border: 1px solid var(--line); border-radius: .9rem;
+            padding: 1.6rem; border-top: 5px solid var(--gold);
+        }
+        article p { margin: 0; color: var(--muted); }
+
+        ol.goals { margin: 0; padding: 0; list-style: none; counter-reset: goal; max-width: 36rem; }
+        ol.goals li {
+            counter-increment: goal; display: flex; gap: 1rem; align-items: center;
+            padding: .9rem 0; border-bottom: 1px solid var(--line);
+        }
+        ol.goals li::before {
+            content: counter(goal); flex: none; width: 2.2rem; height: 2.2rem; border-radius: 50%;
+            display: grid; place-items: center; background: var(--gold); color: #17261d;
+            font: 700 1rem var(--head);
+        }
+
+        form { display: grid; gap: .5rem; max-width: 36rem; background: var(--card); border: 1px solid var(--line); border-radius: .9rem; padding: 1.5rem; margin: 1.25rem 0 .75rem; }
+        label { font-weight: 600; margin-top: .5rem; }
+        input, textarea {
+            font: inherit; color: inherit; background: var(--paper);
+            border: 1.5px solid var(--line); border-radius: .5rem; padding: .7rem .85rem; width: 100%;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--leaf); box-shadow: 0 0 0 3px var(--gold); }
+        textarea { min-height: 8rem; resize: vertical; }
+        form .btn { justify-self: start; margin-top: .75rem; }
+        .note { color: var(--muted); font-size: .9rem; }
+
+        footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--muted); font-size: .95rem; }
+        footer p { margin: 0; }
+
+        @media (max-width: 40rem) {
+            .hero { grid-template-columns: 1fr; }
+            .avatar { width: 150px; height: 150px; order: -1; box-shadow: 9px 9px 0 var(--leaf-soft); }
+            .btn.ghost { margin: .6rem 0 0; }
+            td:first-child { width: auto; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .btn { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <nav aria-label="Main">
+            <a class="brand" href="#home">Ireneo B.</a>
+            <a class="link" href="#about">About</a>
+            <a class="link" href="#skills">Skills</a>
+            <a class="link" href="#education">Education</a>
+            <a class="link" href="#projects">Projects</a>
+            <a class="link" href="#goals">Goals</a>
+            <a class="link" href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main class="wrap">
+        <section id="home">
+            <div class="hero">
+                <div>
+                    <p class="hi">Hi, I'm Ireneo M. Barcelona III.</p>
+                    <h1>My Developer Portfolio</h1>
+                    <p class="lead">An aspiring web developer building websites and systems that solve everyday problems.</p>
+                    <a class="btn primary" href="#projects">See my projects</a>
+                    <a class="btn ghost" href="#contact">Contact me</a>
+                </div>
+                <img class="avatar" src="profile.png" alt="Profile photo of Ireneo M. Barcelona III">
+            </div>
+        </section>
+
+        <section class="block" id="about">
+            <h2>About Me</h2>
+            <p class="about-text">I eat, I sleep, I code.</p>
+        </section>
+
+        <section class="block" id="skills">
+            <h2>My Technical Skills</h2>
+            <ul class="chips">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Git</li>
+                <li>Python</li>
+            </ul>
+        </section>
+
+        <section class="block" id="education">
+            <h2>Educational Background</h2>
+            <table>
+                <tr><th>Category</th><th>Details</th></tr>
+                <tr><td>School</td><td>National University</td></tr>
+                <tr><td>Program</td><td>Bachelor of Science in Information Technology</td></tr>
+                <tr><td>Year Level</td><td>2nd Year</td></tr>
+            </table>
+        </section>
+
+        <section class="block" id="projects">
+            <h2>My Projects</h2>
+            <div class="projects">
+                <article>
+                    <h3>Project 1: Tung Tung Turon</h3>
+                    <p>Tung Tung Turon is a two-page promotional website for a
+                        small-batch Filipino snack business that sells turon,
+                        a crispy fried banana and jackfruit roll coated in caramelized sugar.
+                        The site promotes the product through photos of the actual turon and a
+                        warm banana-leaf green and caramel gold color scheme.
+                        It is fully responsive, so it works on both desktop and mobile.</p>
+                </article>
+                <article>
+                    <h3>Project 2: Web-Based Equipment Request System for NU Fairview</h3>
+                    <p>Web-Based Equipment Request System for NU Fairview is an online system
+                        that replaces the paper-based, face-to-face way of borrowing school
+                        equipment such as HDMI cables, remote controls, and microphones.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="block" id="goals">
+            <h2>My Career Goals</h2>
+            <ol class="goals">
+                <li>Improve my web development skills</li>
+                <li>Gain more experience in backend development</li>
+                <li>Contribute to open-source projects</li>
+            </ol>
+        </section>
+
+        <section class="block" id="contact">
+            <h2>Contact Me</h2>
+            <p>Email: <a href="mailto:cybeeskies@gmail.com">Contact via Email</a></p>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message"></textarea>
+
+                <button class="btn primary" type="button">Send Message</button>
+            </form>
+            <p class="note">Note: This form is a visual prototype only.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="wrap">
+            <p>&copy; 2026 Ireneo M. Barcelona III. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
